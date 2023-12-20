@@ -3,8 +3,7 @@ import re
 
 from parrot_paraphraser import ParrotParaphraser
 from pegasus_paraphraser import PegasusParaphraser
-
-# TODO: Refactor this code. This is more of a proof of concept.
+from chatgpt_paraphraser import ChatGPTParaphraser
 
 problems = [
   {
@@ -69,6 +68,7 @@ def replace_variables_in_string(string, variables):
 if __name__ == "__main__":
   parrot_paraphraser = ParrotParaphraser()
   pegasus_paraphraser = PegasusParaphraser()
+  chatgpt_paraphraser = ChatGPTParaphraser()
 
   generated_problem, answer, explanation = generate_problem(problems[0])
 
@@ -81,3 +81,6 @@ if __name__ == "__main__":
 
   paraphrased_problem_by_pegasus = pegasus_paraphraser.paraphrase(generated_problem)
   print("Question, paraphrased by Pegasus:", paraphrased_problem_by_pegasus)
+
+  paraphrased_problem_by_chatgpt = chatgpt_paraphraser.paraphrase(generated_problem)
+  print("Question, paraphrased by ChatGPT on T5:", paraphrased_problem_by_chatgpt)
