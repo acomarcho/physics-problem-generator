@@ -14,12 +14,13 @@ class ParrotParaphraser:
     paraphrases = []
 
     for sentence in sentences:
-      generated_paraphrases = self.parrot.augment(input_phrase=sentence, max_return_phrases=10, adequacy_threshold=0.95)
+      generated_paraphrases = self.parrot.augment(input_phrase=sentence, max_return_phrases=10, adequacy_threshold=0.8)
 
       if generated_paraphrases == None:
-        return "Parrot Paraphraser could not generate a phrase with enough adequacy."
+        paraphrases.append(sentence.strip("."))
+        continue
       
-      paraphrases.append(generated_paraphrases[0][0])
+      paraphrases.append(generated_paraphrases[0][0].strip("."))
 
     combined_paraphrase = ". ".join(paraphrases)
     return combined_paraphrase

@@ -1,6 +1,9 @@
 import random
 import re
 
+from parrot_paraphraser import ParrotParaphraser
+from pegasus_paraphraser import PegasusParaphraser
+
 # TODO: Refactor this code. This is more of a proof of concept.
 
 problems = [
@@ -24,7 +27,7 @@ problems = [
     "answer": "2*({{B}}-({{A}}*{{C}}))/({{C}}**2)",
     "explanation": """From the equation s = v*t + (1/2)*a*(t^2), plug in the values for s, v, and t and solve for a.
     a = 2*(s - v*t)/(t^2),
-    a = 2*({{B}} - {{A}}*{{C}})/({{C}}^2)
+    a = 2*(({{B}} m) - ({{A}} m/s)*({{C}} s))/(({{C}} m/s)^2)
     a = {{answer}} m/s^2
     """
   }
@@ -64,8 +67,17 @@ def replace_variables_in_string(string, variables):
   return result_string
 
 if __name__ == "__main__":
+  parrot_paraphraser = ParrotParaphraser()
+  pegasus_paraphraser = PegasusParaphraser()
+
   generated_problem, answer, explanation = generate_problem(problems[0])
 
   print(f"Question: {generated_problem}")
   print(f"Answer: {answer}")
   print(f"Explanation: {explanation}")
+
+  paraphrased_problem_by_parrot = parrot_paraphraser.paraphrase(generated_problem)
+  print("Question, paraphrased by Parrot:", paraphrased_problem_by_parrot)
+
+  paraphrased_problem_by_pegasus = pegasus_paraphraser.paraphrase(generated_problem)
+  print("Question, paraphrased by Pegasus:", paraphrased_problem_by_pegasus)

@@ -13,7 +13,7 @@ class PegasusParaphraser:
     paraphrases = []
 
     for sentence in sentences:
-      inputs = self.tokenizer.encode_plus(sentence, return_tensors="pt", truncation=True, max_length=512)
+      inputs = self.tokenizer.__call__(sentence, return_tensors="pt", truncation=False)
 
       input_ids = inputs["input_ids"]
       attention_mask = inputs["attention_mask"]
@@ -21,15 +21,15 @@ class PegasusParaphraser:
       paraphrase = self.model.generate(
           input_ids=input_ids,
           attention_mask=attention_mask,
-          num_beams=4,
-          max_length=100,
-          early_stopping=True
+          num_beams=10,
+          max_length=500,
+          early_stopping=False
       )[0]
       paraphrased_text = self.tokenizer.decode(paraphrase, skip_special_tokens=True)
 
-      paraphrases.append(paraphrased_text)
+      paraphrases.append(paraphrased_text.strip("."))
 
-    combined_paraphrase = " ".join(paraphrases)
+    combined_paraphrase = ". ".join(paraphrases)
     return combined_paraphrase
     
 
