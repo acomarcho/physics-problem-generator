@@ -4,6 +4,7 @@ import re
 from parrot_paraphraser import ParrotParaphraser
 from pegasus_paraphraser import PegasusParaphraser
 from chatgpt_paraphraser import ChatGPTParaphraser
+from bart_paraphraser import BartParaphraser
 
 problems = [
   {
@@ -69,6 +70,7 @@ if __name__ == "__main__":
   parrot_paraphraser = ParrotParaphraser()
   pegasus_paraphraser = PegasusParaphraser()
   chatgpt_paraphraser = ChatGPTParaphraser()
+  bart_paraphraser = BartParaphraser()
 
   generated_problem, answer, explanation = generate_problem(problems[0])
 
@@ -84,3 +86,6 @@ if __name__ == "__main__":
 
   paraphrased_problem_by_chatgpt = chatgpt_paraphraser.paraphrase(generated_problem)
   print("Question, paraphrased by ChatGPT on T5:", paraphrased_problem_by_chatgpt)
+
+  paraphrased_problem_by_bart = bart_paraphraser.paraphrase(generated_problem)
+  print("Question, paraphrased by Bart:", paraphrased_problem_by_bart)
