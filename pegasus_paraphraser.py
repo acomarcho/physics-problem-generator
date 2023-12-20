@@ -1,21 +1,18 @@
 from transformers import PegasusForConditionalGeneration, PegasusTokenizer
+from string_utility import StringUtility
 
 class PegasusParaphraser:
   def __init__(self):
     model_name = "tuner007/pegasus_paraphrase"
     self.tokenizer = PegasusTokenizer.from_pretrained(model_name)
     self.model = PegasusForConditionalGeneration.from_pretrained(model_name)
+    self.string_utility = StringUtility()
 
   def paraphrase(self, text):
-    sentences = text.split(".")
+    sentences = self.string_utility.get_sentences(text)
     paraphrases = []
 
     for sentence in sentences:
-      sentence = sentence.strip()
-
-      if len(sentence) == 0:
-          continue
-
       inputs = self.tokenizer.encode_plus(sentence, return_tensors="pt", truncation=True, max_length=512)
 
       input_ids = inputs["input_ids"]
@@ -32,8 +29,7 @@ class PegasusParaphraser:
 
       paraphrases.append(paraphrased_text)
 
-      combined_paraphrase = " ".join(paraphrases)
-
+    combined_paraphrase = " ".join(paraphrases)
     return combined_paraphrase
     
 
